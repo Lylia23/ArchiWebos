@@ -1,8 +1,7 @@
 const urlHost = 'http://localhost:5678/api';
 
 login("sophie.bluel@test.tld", "S0phie");
-getCategories();
-getWorks();
+getWorks(0);
 
 //-----------functions--------------------
 
@@ -36,7 +35,20 @@ function getCategories () {
         .catch(error => console.error('There was a problem with the fetch operation:', error)); 
 }
 
- function getWorks () {
+ function getWorks (filtre) {
+
+    for (let i = 0; i < 4; i++) {
+        // recuperation des boutons des filtres par id 
+        let btnFiltre = document.getElementById('btn-' + i);
+        if (filtre == i){
+            //Application de la classe de style au moment du clique 
+            btnFiltre.className = "btn-filtre-on-clique";
+        } else {
+            //remetre le style par defaut des boutons non selectionnés
+            btnFiltre.className = "btn-filtre";
+        }
+    }
+
     fetch(urlHost + '/works', {
         method: 'GET',
         headers: {
@@ -45,8 +57,7 @@ function getCategories () {
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data);
-        remplirGalleryOfWorks(data);
+        remplirGalleryOfWorks(data, filtre);
     })
     .catch(error => console.error('There was a problem with the fetch operation:', error)); 
 }
@@ -92,11 +103,26 @@ function retreiveToken (){
     return localStorage.getItem('monToken');
 }
 
-function remplirGalleryOfWorks(jsonData) {
+function remplirGalleryOfWorks(jsonData, filtre) {
+    //vider la galerie
+    document.querySelector(".gallery").innerHTML = "";
+    let categoryIds = [1, 2, 3];
     
     for (let i = 0; i < jsonData.length; i++){
         let figure = jsonData [i];
-        let figureHtml = '<figure><img src="' + figure.imageUrl + '" alt="' + figure.title + '"><figcaption>' + figure.title + '</figcaption></figure>';
-        document.querySelector(".gallery").innerHTML = document.querySelector(".gallery").innerHTML + figureHtml;
+        //Condition pour enrichir toutes les figures 
+        if (!categoryIds.includes(filtre)) {
+
+            let figureHtml = '<figure><img src="' + figure.imageUrl + '" alt="' + figure.title + '"><figcaption>' + figure.title + '</figcaption></figure>';
+            document.querySelector(".gallery").innerHTML = document.querySelector(".gallery").innerHTML + figureHtml;
+        
+        } else 
+        //Condition pour enrichir que les figures qui ont l'id demandé au niveau du paramètre filtre
+        if(figure.categoryId == filtre) {
+
+            let figureHtml = '<figure><img src="' + figure.imageUrl + '" alt="' + figure.title + '"><figcaption>' + figure.title + '</figcaption></figure>';
+            document.querySelector(".gallery").innerHTML = document.querySelector(".gallery").innerHTML + figureHtml;
+
+        }
     }
 }

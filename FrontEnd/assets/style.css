@@ -2,7 +2,9 @@
    v2.0 | 20110126
    License: none (public domain)
 */
-
+:root {
+	--vert-site: #1D6154;
+}
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -82,7 +84,7 @@ h2{
 	font-family: 'Syne';
 	font-weight: 700;
 	font-size: 30px;
-	color: #1D6154
+	color: var(--vert-site)
 }
 nav ul {
 	display: flex;
@@ -173,7 +175,7 @@ input[type="submit"]{
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
-	background-color: #1D6154;
+	background-color: var(--vert-site);
 	margin : 2em auto ;
 	width: 180px;
 	text-align: center;
@@ -186,3 +188,49 @@ footer nav ul {
 	margin: 2em
 }
 
+.filtre {
+	display: flex;
+	justify-content: center;
+	gap: 15px;
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+
+.btn-filtre {
+	border: 2px solid var(--vert-site);
+	border-radius: 60px;
+	height: 37px;
+	display: flex;
+	justify-content: center;
+	cursor: pointer;
+
+	p {
+		font-family: Syne;
+		font-weight: 700;
+		font-size: 16px;
+		line-height: 19.2px;
+		align-self: center;
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+}
+
+.btn-filtre-on-clique {
+	border: 2px solid var(--vert-site);
+	border-radius: 60px;
+	height: 37px;
+	display: flex;
+	justify-content: center;
+	cursor: pointer;
+	background-color: var(--vert-site);
+	p {
+		color: white;
+		font-family: Syne;
+		font-weight: 700;
+		font-size: 16px;
+		line-height: 19.2px;
+		align-self: center;
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+}
