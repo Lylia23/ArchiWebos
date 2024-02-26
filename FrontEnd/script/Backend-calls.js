@@ -1,6 +1,9 @@
 const urlHost = 'http://localhost:5678/api';
+const tabFiltres = ['Tous', 'Objets', 'Appartements', 'Hôtels & restaurants'];
+const categoryIds = [1, 2, 3];
 
 login("sophie.bluel@test.tld", "S0phie");
+construireFiltres();
 getWorks(0);
 
 //-----------functions--------------------
@@ -37,9 +40,10 @@ function getCategories () {
 
  function getWorks (filtre) {
 
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < tabFiltres.length; i++) {
         // recuperation des boutons des filtres par id 
-        let btnFiltre = document.getElementById('btn-' + i);
+        let id = 'btn-' + i;
+        let btnFiltre = document.getElementById(id);
         if (filtre == i){
             //Application de la classe de style au moment du clique 
             btnFiltre.className = "btn-filtre-on-clique";
@@ -106,13 +110,11 @@ function retreiveToken (){
 function remplirGalleryOfWorks(jsonData, filtre) {
     //vider la galerie
     document.querySelector(".gallery").innerHTML = "";
-    let categoryIds = [1, 2, 3];
     
     for (let i = 0; i < jsonData.length; i++){
         let figure = jsonData [i];
         //Condition pour enrichir toutes les figures 
         if (!categoryIds.includes(filtre)) {
-
             let figureHtml = '<figure><img src="' + figure.imageUrl + '" alt="' + figure.title + '"><figcaption>' + figure.title + '</figcaption></figure>';
             document.querySelector(".gallery").innerHTML = document.querySelector(".gallery").innerHTML + figureHtml;
         
@@ -124,5 +126,20 @@ function remplirGalleryOfWorks(jsonData, filtre) {
             document.querySelector(".gallery").innerHTML = document.querySelector(".gallery").innerHTML + figureHtml;
 
         }
+    }
+}
+
+function construireFiltres() {
+    for(let i = 0; i < tabFiltres.length; i++) {
+        let idFiltre = 'btn-' + i;
+        let filtre = '<div id="' + idFiltre + '"><p>' + tabFiltres[i] + '</p></div>';
+        document.querySelector('.filtre').innerHTML = document.querySelector('.filtre').innerHTML + filtre;
+    }
+    addEventListenerAuFiltres();
+}
+
+function addEventListenerAuFiltres() {
+    for(let i = 0; i < tabFiltres.length; i++) {
+        document.getElementById('btn-' + i).addEventListener('click', ()=>getWorks(i));
     }
 }
