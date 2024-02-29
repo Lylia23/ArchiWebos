@@ -2,29 +2,13 @@ const urlHost = 'http://localhost:5678/api';
 const tabFiltres = ['Tous', 'Objets', 'Appartements', 'Hôtels & restaurants'];
 const categoryIds = [1, 2, 3];
 
-login("sophie.bluel@test.tld", "S0phie");
+verifyToken();
+
 construireFiltres();
 getWorks(0);
+addEventListenerLogout();
 
 //-----------functions--------------------
-
-function login(emailParam, passwordParam) {
-    fetch(urlHost + '/users/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(
-            {
-                email: emailParam,
-                password: passwordParam
-            }
-        )
-    })
-        .then(response => response.json())
-        .then(data => enregistrerToken(data.token))
-        .catch(error => console.error('There was a problem with the fetch operation:', error));
-}
 
 function getCategories () {
     fetch(urlHost + '/categories', {
@@ -99,13 +83,6 @@ function deleteWorks (workId) {
 }
 */
 
-function enregistrerToken (token) {
-    localStorage.setItem('monToken', token);
-}
-
-function retreiveToken (){
-    return localStorage.getItem('monToken');
-}
 
 function remplirGalleryOfWorks(jsonData, filtre) {
     //vider la galerie
@@ -142,4 +119,26 @@ function addEventListenerAuFiltres() {
     for(let i = 0; i < tabFiltres.length; i++) {
         document.getElementById('btn-' + i).addEventListener('click', ()=>getWorks(i));
     }
+}
+
+function verifyToken() {
+    let monToken = retreiveToken();
+    if (!monToken) {
+        window.location.href = window.location.origin + '/FrontEnd/login.html';
+    }
+}
+
+function retreiveToken () {
+    return localStorage.getItem('monToken');
+}
+
+function addEventListenerLogout() {
+        document.getElementById('logout').addEventListener('click', ()=>{
+            removeToken();
+            verifyToken();
+        });
+}
+
+function removeToken (){
+    return localStorage.removeItem('monToken');
 }
