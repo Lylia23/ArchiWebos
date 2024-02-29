@@ -234,3 +234,7 @@ footer nav ul {
 		padding-right: 15px;
 	}
 }
+
+#logout {
+	cursor: pointer;
+}
