@@ -1,3 +1,10 @@
+body {
+    max-width: 1140px;
+	margin:auto;
+	font-family: 'Work Sans' ;
+	font-size: 14px;
+}
+
 .login-container {
     display: flex;
     justify-content: center;
