@@ -6,7 +6,7 @@ verifyToken();
 
 construireFiltres();
 getWorks(0);
-addEventListenerLogout();
+addEventListenerLog();
 
 //-----------functions--------------------
 
@@ -123,22 +123,31 @@ function addEventListenerAuFiltres() {
 
 function verifyToken() {
     let monToken = retreiveToken();
-    if (!monToken) {
-        window.location.href = window.location.origin + '/FrontEnd/login.html';
-    }
+    document.getElementById('log').innerHTML = !monToken ? 'login' : 'logout';
+    document.querySelector(".mes-projet div").className = !monToken ? 'hide-mes-projet-modfier' : '';
+    document.querySelector(".mode-edition").className = !monToken ? 'hide-mode-edition' : 'mode-edition';
 }
 
 function retreiveToken () {
     return localStorage.getItem('monToken');
 }
 
-function addEventListenerLogout() {
-        document.getElementById('logout').addEventListener('click', ()=>{
-            removeToken();
-            verifyToken();
+function addEventListenerLog() {
+        document.getElementById('log').addEventListener('click', ()=>{
+            let monToken = retreiveToken();
+            if (!monToken) {
+                redirectionToLogin();
+            } else {
+                removeToken();
+                verifyToken();
+            }
         });
 }
 
 function removeToken (){
     return localStorage.removeItem('monToken');
+}
+
+function redirectionToLogin() {
+    window.location.href = window.location.origin + '/FrontEnd/pages/login.html';
 }

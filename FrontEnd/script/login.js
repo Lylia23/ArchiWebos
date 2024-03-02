@@ -20,8 +20,13 @@ function login(emailParam, passwordParam) {
                     password: passwordParam
                 }
             )
-        })
-            .then(response => response.json())
+        }).then(response => {
+                if(response.status !== 200) {
+                    alert("Merci de vérifier le nom d'utilisateur et le mode de passe svp !");
+                    throw new Error("Authentication error !");
+                } 
+                return response.json();  
+            })
             .then(data => {
                 enregistrerToken(data.token);
                 window.location.href = window.location.origin + '/FrontEnd/index.html';

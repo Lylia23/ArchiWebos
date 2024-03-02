@@ -49,16 +49,17 @@ table {
 	border-spacing: 0;
 }
 /** end reset css**/
-body {
+
+.page-container {
 	max-width: 1140px;
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
 }
-header {
+.header-style {
 	display: flex;
 	justify-content: space-between;
-	margin: 50px 0
+	margin: 50px 0;
 }
 section {
 	margin: 50px 0
@@ -235,6 +236,52 @@ footer nav ul {
 	}
 }
 
-#logout {
+#log {
 	cursor: pointer;
+}
+
+.mes-projet {
+	display: flex;
+	gap: 20px;
+	justify-content: center;
+	div {
+		padding-top: 5px;
+		display: flex;
+		gap: 5px;
+		height: 20px;
+		align-items: end;
+		p {
+			font-family: Work Sans;
+			font-size: 14px;
+			font-weight: 400;
+			line-height: 16px;
+			letter-spacing: 0em;
+			text-align: center;
+		}
+	}
+}
+
+.hide-mes-projet-modfier {
+	visibility: hidden;
+}
+
+.hide-mode-edition {
+	visibility: hidden;
+	height: 0;
+}
+
+.mode-edition {
+	height: 29px;
+	width: 100%;
+	background-color: black;
+	color: white;
+	display: flex;
+	justify-content: center;
+	gap: 5px;
+	align-items: center;
+	font-family: 'Work Sans' ;
+	font-size: 14px;
+	img {
+		height: 16px;
+	}
 }
