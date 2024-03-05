@@ -8,7 +8,7 @@ construireFiltres();
 getWorks(0);
 addEventListenerLog();
 
-//-----------functions--------------------
+//----------functions--------------------
 
 function getCategories () {
     fetch(urlHost + '/categories', {
@@ -124,7 +124,8 @@ function addEventListenerAuFiltres() {
 function verifyToken() {
     let monToken = retreiveToken();
     document.getElementById('log').innerHTML = !monToken ? 'login' : 'logout';
-    document.querySelector(".mes-projet div").className = !monToken ? 'hide-mes-projet-modfier' : '';
+    document.querySelector(".mes-projet div").className = !monToken ? 'hide-mes-projet-modifier' : '';
+    document.querySelector(".mes-projet div").addEventListener('click', ()=>loadPopup());
     document.querySelector(".mode-edition").className = !monToken ? 'hide-mode-edition' : 'mode-edition';
 }
 
@@ -150,4 +151,22 @@ function removeToken (){
 
 function redirectionToLogin() {
     window.location.href = window.location.origin + '/FrontEnd/pages/login.html';
+}
+
+function loadPopup() {
+    fetch('./pages/popup.html')
+    .then(response => response.text())
+    .then(data => {
+        const container = document.createElement('div');
+        container.innerHTML = data;
+        container.id = "popup"
+        const popupPostion = document.getElementById('popup-position');
+        popupPostion.className = 'show-popup-position';
+        let pageHeight = document.documentElement.scrollHeight;
+        popupPostion.style.height = pageHeight + 'px';
+        popupPostion.appendChild(container);
+        addEventListenerAuToPopupBtns();
+        remplirPopupGalerie();
+    })
+    .catch(error => console.error('Error loading the file:', error));
 }
