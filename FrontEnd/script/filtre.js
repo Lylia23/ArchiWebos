@@ -46,6 +46,7 @@ function getCategories () {
     .then(response => response.json())
     .then(data => {
         remplirGalleryOfWorks(data, filtre);
+        saveSelectedFilter(filtre);
     })
     .catch(error => console.error('There was a problem with the fetch operation:', error)); 
 }
@@ -76,10 +77,6 @@ function createWorks(image, title, category) {
         .catch(error => {
             console.error('There was a problem with the fetch operation:', error);
         });
-}
-
-function deleteWorks (workId) {
-    
 }
 */
 
@@ -169,4 +166,8 @@ function loadPopup() {
         remplirPopupGalerie();
     })
     .catch(error => console.error('Error loading the file:', error));
+}
+
+function saveSelectedFilter(filter) {
+    localStorage.setItem('monFiltre', filter);
 }
