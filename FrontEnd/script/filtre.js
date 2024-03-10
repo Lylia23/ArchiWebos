@@ -162,7 +162,7 @@ function loadPopup() {
         let pageHeight = document.documentElement.scrollHeight;
         popupPostion.style.height = pageHeight + 'px';
         popupPostion.appendChild(container);
-        addEventListenerAuToPopupBtns();
+        addEventListenerToPopupBtns();
         remplirPopupGalerie();
     })
     .catch(error => console.error('Error loading the file:', error));

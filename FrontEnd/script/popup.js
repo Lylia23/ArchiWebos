@@ -11,12 +11,17 @@ function deletePopup() {
 }
 
 function goBack() {
-    console.log('go back');
+    document.getElementById('galerie-content').className = "popup-galerie";
+    document.getElementById('formulaire-content').className ="hide-content";
+    document.querySelector('.btn-container .btn span').innerHTML = "Ajouter une photo";
+    document.getElementById('go-back').style.visibility = "hidden";
+    document.getElementById('popup-titre').innerHTML = "Galerie photo";
 }
 
-function addEventListenerAuToPopupBtns() {
+function addEventListenerToPopupBtns() {
     document.getElementById('exit').addEventListener('click', ()=>deletePopup());
     document.getElementById('go-back').addEventListener('click', ()=>goBack());
+    document.getElementById('go-back').style.visibility = "hidden";
 }
 
 function remplirPopupGalerie() {
@@ -41,6 +46,7 @@ function remplirPopupGalerie() {
             document.querySelector('.popup-galerie').innerHTML = document.querySelector('.popup-galerie').innerHTML + figureHtml;
         }
         addEventListenerToTrash(data);
+        addEventListenerToBtnAjout();
     })
     .catch(error => console.error('There was a problem with the fetch operation:', error)); 
 }
@@ -70,4 +76,18 @@ function deleteWorks (workId) {
 
 function retreiveSavedFilter() {
     return Number(localStorage.getItem('monFiltre'));
+}
+
+function addEventListenerToBtnAjout() {
+        document.querySelector('.btn-container .btn').addEventListener('click', ()=> {
+            switchContent();
+        });
+}
+
+function switchContent() {
+    document.getElementById('galerie-content').className = "hide-content";
+    document.getElementById('formulaire-content').className ="popup-ajout-projet";
+    document.getElementById('go-back').style.visibility = "visible";
+    document.querySelector('.btn-container .btn span').innerHTML = "Valider";
+    document.getElementById('popup-titre').innerHTML = "Ajout photo";
 }

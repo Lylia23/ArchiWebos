@@ -300,7 +300,7 @@ footer nav ul {
 }
 
 .popup-page {
-	position: absolute;
+	position: fixed;
 	width: 50%;
 	left: 25%;
 	top: 8%;
@@ -325,6 +325,7 @@ footer nav ul {
 	}
 
 	.popup-galerie {
+		visibility: visible;
 		display: grid;
         grid-template-columns: repeat(5, 1fr);
 		gap: 10px;
@@ -355,6 +356,15 @@ footer nav ul {
 				margin-bottom: 20px;
 			}
 		}
+	}
+
+	.popup-ajout-projet {
+		visibility: visible;
+	}
+	
+	.hide-content {
+		visibility: hidden;
+		height: 0;
 	}
 
 	.btn-container {
