@@ -1,5 +1,3 @@
-console.log('Popup js fonctionnne :)');
-
 function deletePopup() {
     const popup = document.querySelector('#popup');
     if (popup) {
@@ -9,6 +7,35 @@ function deletePopup() {
         popupPostion.style.height = '0px';
     }
 }
+
+/*
+function createWorks(image, title, category) {
+    const formData = new FormData();
+
+    //formData.append('profile_picture', fileInputElement.files[0]);
+    
+    formData.append('image', image);
+    formData.append('title', title);
+    formData.append('category', category);
+
+    fetch(urlHost + '/works', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+}
+*/
 
 function goBack() {
     document.getElementById('galerie-content').className = "popup-galerie";
