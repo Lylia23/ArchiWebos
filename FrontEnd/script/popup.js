@@ -8,35 +8,6 @@ function deletePopup() {
     }
 }
 
-/*
-function createWorks(image, title, category) {
-    const formData = new FormData();
-
-    //formData.append('profile_picture', fileInputElement.files[0]);
-    
-    formData.append('image', image);
-    formData.append('title', title);
-    formData.append('category', category);
-
-    fetch(urlHost + '/works', {
-        method: 'POST',
-        body: formData
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log(data);
-        })
-        .catch(error => {
-            console.error('There was a problem with the fetch operation:', error);
-        });
-}
-*/
-
 function goBack() {
     document.getElementById('galerie-content').className = "popup-galerie";
     document.getElementById('formulaire-content').className ="hide-content";
@@ -52,7 +23,7 @@ function addEventListenerToPopupBtns() {
 }
 
 function remplirPopupGalerie() {
-    document.querySelector('.popup-galerie').innerHTML = "";
+    document.getElementById('galerie-content').innerHTML = "";
 
     fetch(urlHost + '/works', {
         method: 'GET',
@@ -70,7 +41,7 @@ function remplirPopupGalerie() {
                                 </div>
                                 <img class="popup-figure" src="${figure.imageUrl}" alt="${figure.title}">
                             </div>`;
-            document.querySelector('.popup-galerie').innerHTML = document.querySelector('.popup-galerie').innerHTML + figureHtml;
+            document.getElementById('galerie-content').innerHTML += figureHtml;
         }
         addEventListenerToTrash(data);
         addEventListenerToBtnAjout();
@@ -107,7 +78,12 @@ function retreiveSavedFilter() {
 
 function addEventListenerToBtnAjout() {
         document.querySelector('.btn-container .btn').addEventListener('click', ()=> {
-            switchContent();
+            const textBtn =  document.querySelector('.btn-container .btn span').innerHTML;
+            if (textBtn === 'Valider'){
+                saveWork();              
+            }else {
+                switchContent();
+            }
         });
 }
 
@@ -117,4 +93,42 @@ function switchContent() {
     document.getElementById('go-back').style.visibility = "visible";
     document.querySelector('.btn-container .btn span').innerHTML = "Valider";
     document.getElementById('popup-titre').innerHTML = "Ajout photo";
+}
+
+function saveWork() {
+    const photoFormulaire= document.getElementById('photo-formulaire').files[0];
+    const titreFormulaire= document.getElementById('titre-formulaire').value;
+    const categorieFormulaire= document.getElementById('categorie-formulaire').value;
+    createWorks(photoFormulaire, titreFormulaire, categorieFormulaire);
+    remplirPopupGalerie();
+    const filter = retreiveSavedFilter();
+    getWorks(filter);
+}  
+
+function createWorks(image, title, category) {
+    const formData = new FormData();
+
+    formData.append('image', image);
+    formData.append('title', title);
+    formData.append('category', category);
+
+    fetch(urlHost + '/works', {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + retreiveToken()
+        },
+        body: formData
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
 }
