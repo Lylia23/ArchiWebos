@@ -79,7 +79,7 @@ function retreiveSavedFilter() {
 function addEventListenerToBtnAjout() {
         document.querySelector('.btn-container .btn').addEventListener('click', ()=> {
             const textBtn =  document.querySelector('.btn-container .btn span').innerHTML;
-            if (textBtn === 'Valider'){
+            if (textBtn === 'Valider' && validateTextAndPhoto()){
                 saveWork();              
             }else {
                 switchContent();
