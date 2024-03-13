@@ -12,7 +12,12 @@
         <div id="galerie-content" class="popup-galerie"></div>
         <div id="formulaire-content" class="hide-content">
             <div class="chargement-fichier">
-                <input type="file" name="" id="photo-formulaire">
+                <img id="image-to-send" src="./assets/icons/picture-svgrepo-com.png" />
+                <label for="photo-formulaire" class="chargement-fichier-label">
+                    <span>+ Ajouter photo</span>
+                </label>
+                <input id="photo-formulaire" type="file">
+                <span id="file-condition">jpg, png: 4mo max</span>
             </div>
             <div class="titre-formulaire">
                 <label for="titre-formulaire">Titre</label>

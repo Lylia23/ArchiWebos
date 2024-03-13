@@ -92,7 +92,9 @@ function switchContent() {
     document.getElementById('formulaire-content').className ="popup-ajout-projet";
     document.getElementById('go-back').style.visibility = "visible";
     document.querySelector('.btn-container .btn span').innerHTML = "Valider";
+    document.querySelector('.btn-container .btn').classList.add("btn-not-valid");
     document.getElementById('popup-titre').innerHTML = "Ajout photo";
+    addEventListenerToImageUploaderAndInputText();
 }
 
 function saveWork() {
@@ -131,4 +133,58 @@ function createWorks(image, title, category) {
         .catch(error => {
             console.error('There was a problem with the fetch operation:', error);
         });
+}
+
+function chargerImage(inputFile) {
+
+    var file = inputFile.files[0];
+    const acceptedExtensions = ['jpg', 'png'];
+    const fileExtension = file.name.split('.').pop();
+    if (file.size > 4194304 || !acceptedExtensions.includes(fileExtension)) {
+        document.getElementById('file-condition').style.color = "red";
+    } else {
+        document.getElementById('file-condition').style.color = "#444444";
+        var reader = new FileReader();
+        reader.onload = (event) => document.getElementById("image-to-send").src = event.target.result;
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            document.getElementById("image-to-send").src = "./assets/icons/picture-svgrepo-com.png";
+        }
+    }
+
+    if (validateTextAndPhoto()) {
+        document.querySelector('.btn-container .btn').classList.remove("btn-not-valid");
+    } else {
+        document.querySelector('.btn-container .btn').classList.add("btn-not-valid");
+    }
+    
+}
+
+function addEventListenerToImageUploaderAndInputText() {
+    document.getElementById('photo-formulaire').addEventListener('change', () => 
+        chargerImage(document.getElementById('photo-formulaire'))
+    );
+
+    document.getElementById('titre-formulaire').addEventListener('keyup', () => 
+        validateTextInInput()
+    );
+}
+
+function validateTextInInput() {
+    if (validateTextAndPhoto()) {
+        document.querySelector('.btn-container .btn').classList.remove("btn-not-valid");
+    } else {
+        document.querySelector('.btn-container .btn').classList.add("btn-not-valid");
+    }
+}
+
+function validateTextAndPhoto() {
+    const textValue = document.getElementById('titre-formulaire').value;
+    const photoColor = document.getElementById('file-condition').style.color;
+
+    const isText = textValue && textValue.length > 0;
+    const isPhoto = photoColor !== 'red';
+    
+    return isText && isPhoto
 }
