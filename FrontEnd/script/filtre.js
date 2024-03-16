@@ -41,9 +41,9 @@ function remplirGalleryOfWorks(jsonData, filtre) {
                         </figure>`;
 
         if (filtre === 0) {
-            document.querySelector(".gallery").innerHTML = document.querySelector(".gallery").innerHTML + figureHtml;
+            document.querySelector(".gallery").innerHTML += figureHtml;
         } else if(figure.categoryId == filtre) {
-            document.querySelector(".gallery").innerHTML = document.querySelector(".gallery").innerHTML + figureHtml;
+            document.querySelector(".gallery").innerHTML += figureHtml;
         }
     }
 }
@@ -82,7 +82,7 @@ function construireFiltres() {
     for(let i = 0; i < tabCategories.length; i++) {
         let idFiltre = 'btn-' + i;
         let filtre = `<div id="${idFiltre}"><p>${tabCategories[i].name}</p></div>`;
-        document.querySelector('.filtre').innerHTML = document.querySelector('.filtre').innerHTML + filtre;
+        document.querySelector('.filtre').innerHTML += filtre;
     }
     addEventListenerAuFiltres();
 }
@@ -127,6 +127,7 @@ function redirectionToLogin() {
 
 function loadPopup() {
     fetch('./pages/popup.html')
+    //recupération du contenu de la page sous forme texte
     .then(response => response.text())
     .then(data => {
         const container = document.createElement('div');
@@ -134,8 +135,11 @@ function loadPopup() {
         container.id = "popup"
         const popupPostion = document.getElementById('popup-position');
         popupPostion.className = 'show-popup-position';
+        //recupération de la hauteur global de la page 
         let pageHeight = document.documentElement.scrollHeight;
+        //application de hauteur global de la page sur popup position
         popupPostion.style.height = pageHeight + 'px';
+        //injection du container construit
         popupPostion.appendChild(container);
         addEventListenerToPopupBtns();
         remplirPopupGalerie();
